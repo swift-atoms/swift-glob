@@ -70,6 +70,9 @@ extension Glob.Pattern.Parser: Parser_Primitives.Parser.`Protocol` {
     /// The error type thrown on parse failure: ``Glob/Error``.
     public typealias Failure = Glob.Error
 
+    /// This is a leaf conformer with no nested body.
+    public typealias Body = Never
+
     /// Consumes the entire remaining input as a glob pattern and
     /// returns the parsed ``Glob/Pattern``.
     ///
