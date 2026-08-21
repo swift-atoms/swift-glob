@@ -11,7 +11,7 @@
 
 public import Byte_Parser_Primitives
 internal import Byte_Primitives_Standard_Library_Integration
-public import Collection_Primitives
+import Collection_Primitives
 public import Parser_Primitives
 
 extension Glob.Pattern {

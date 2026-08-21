@@ -14,7 +14,7 @@ public import Buffer_Linear_Primitive
 public import Buffer_Linear_Primitives
 public import Byte_Parser_Primitives
 public import Ownership_Shared_Primitive
-public import Parser_Primitives
+import Parser_Primitives
 
 extension Glob.Pattern: Parseable {
     /// Pin the `Parseable.Parser` associatedtype to the canonical
