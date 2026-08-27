@@ -1,6 +1,6 @@
 import Testing
 
-@testable import Glob_Primitives
+@testable import Glob
 
 extension Glob.Pattern {
     @Suite struct Tests {

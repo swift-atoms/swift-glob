@@ -1,4 +1,4 @@
-public import Glob_Primitives
+public import Glob
 
 extension Glob.Pattern: ExpressibleByStringLiteral {
 

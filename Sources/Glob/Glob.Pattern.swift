@@ -1,9 +1,9 @@
-public import Array_Primitives
+public import Array
 public import Buffer_Linear_Primitive
-public import Buffer_Linear_Primitives
-public import Byte_Parser_Primitives
+public import Buffer_Linear
+public import Byte_Parser
 public import Ownership_Shared_Primitive
-import Parser_Primitives
+import Parser
 
 extension Glob {
 

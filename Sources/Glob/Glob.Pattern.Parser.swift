@@ -1,7 +1,7 @@
-public import Byte_Parser_Primitives
-internal import Byte_Primitives_Standard_Library_Integration
-import Collection_Primitives
-public import Parser_Primitives
+public import Byte_Parser
+internal import Byte_Standard_Library_Integration
+import Collection
+public import Parser
 
 extension Glob.Pattern {
 
@@ -13,7 +13,7 @@ extension Glob.Pattern {
     }
 }
 
-extension Glob.Pattern.Parser: Parser_Primitives.Parser.`Protocol` {
+extension Glob.Pattern.Parser: Parser.Parser.`Protocol` {
 
     public typealias Output = Glob.Pattern
 

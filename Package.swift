@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-glob-primitives",
+    name: "swift-glob",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -13,80 +13,80 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Glob Primitives",
-            targets: ["Glob Primitives"]
+            name: "Glob",
+            targets: ["Glob"]
         ),
         .library(
-            name: "Glob Primitives Standard Library Integration",
-            targets: ["Glob Primitives Standard Library Integration"]
+            name: "Glob Standard Library Integration",
+            targets: ["Glob Standard Library Integration"]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-array-primitives.git",
+            url: "https://github.com/swift-molecules/swift-array.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-ownership-shared-primitives.git",
+            url: "https://github.com/swift-molecules/swift-ownership-shared.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-buffer-linear-primitives.git",
+            url: "https://github.com/swift-molecules/swift-buffer-linear.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-ascii-primitives.git",
+            url: "https://github.com/swift-molecules/swift-ascii.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-byte-primitives.git",
+            url: "https://github.com/swift-molecules/swift-byte.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-byte-parser-primitives.git",
+            url: "https://github.com/swift-molecules/swift-byte-parser.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-parser-primitives.git",
+            url: "https://github.com/swift-molecules/swift-parser.git",
             branch: "main"
         ),
     ],
     targets: [
         .target(
-            name: "Glob Primitives",
+            name: "Glob",
             dependencies: [
-                .product(name: "Array Primitives", package: "swift-array-primitives"),
+                .product(name: "Array", package: "swift-array"),
                 .product(
                     name: "Ownership Shared Primitive",
-                    package: "swift-ownership-shared-primitives"
+                    package: "swift-ownership-shared"
                 ),
                 .product(
                     name: "Buffer Linear Primitive",
-                    package: "swift-buffer-linear-primitives"
+                    package: "swift-buffer-linear"
                 ),
                 .product(
-                    name: "Buffer Linear Primitives",
-                    package: "swift-buffer-linear-primitives"
+                    name: "Buffer Linear",
+                    package: "swift-buffer-linear"
                 ),
-                .product(name: "ASCII Primitives", package: "swift-ascii-primitives"),
+                .product(name: "ASCII", package: "swift-ascii"),
                 .product(
-                    name: "Byte Primitives Standard Library Integration",
-                    package: "swift-byte-primitives"
+                    name: "Byte Standard Library Integration",
+                    package: "swift-byte"
                 ),
-                .product(name: "Byte Parser Primitives", package: "swift-byte-parser-primitives"),
-                .product(name: "Parser Primitives", package: "swift-parser-primitives"),
+                .product(name: "Byte Parser", package: "swift-byte-parser"),
+                .product(name: "Parser", package: "swift-parser"),
             ]
         ),
         .target(
-            name: "Glob Primitives Standard Library Integration",
+            name: "Glob Standard Library Integration",
             dependencies: [
-                "Glob Primitives"
+                "Glob"
             ]
         ),
         .testTarget(
-            name: "Glob Primitives Tests",
+            name: "Glob Tests",
             dependencies: [
-                "Glob Primitives"
+                "Glob"
             ]
         ),
     ],
