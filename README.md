@@ -49,7 +49,7 @@ The grammar is `*` (any run of characters within a segment), `**` (zero or more 
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-molecules/swift-glob.git", branch: "main")
+    .package(url: "https://github.com/swift-atoms/swift-glob.git", branch: "main")
 ]
 ```
 
@@ -72,10 +72,10 @@ Two library products. Foundation-free.
 
 | Product | Import | Purpose |
 |---------|--------|---------|
-| `Glob` | `Glob` | The `Glob` namespace and its vocabulary: `Glob.Pattern` and its byte-stream `Glob.Pattern.Parser`, the `Glob.Segment` / `Glob.Atom` / `Glob.Scalar.Class` building blocks, `Glob.Options`, and the typed `Glob.Error` family. |
-| `Glob Standard Library Integration` | `Glob_Standard_Library_Integration` | Re-exports the core target and adds the `ExpressibleByStringLiteral` conformance on `Glob.Pattern`. |
+| `Glob Primitives` | `Glob` | The `Glob` namespace and its vocabulary: `Glob.Pattern` and its byte-stream `Glob.Pattern.Parser`, the `Glob.Segment` / `Glob.Atom` / `Glob.Scalar.Class` building blocks, `Glob.Options`, and the typed `Glob.Error` family. |
+| `Glob Standard Library Integration` | `Glob_Standard_Library_Integration` | Re-exports the target and adds the `ExpressibleByStringLiteral` conformance on `Glob.Pattern`. |
 
-Import the narrowest product you need: `Glob` for the pattern types alone, or `Glob Standard Library Integration` (which `@_exported public import`s the core target) when you want glob patterns to read as string literals.
+Import the narrowest product you need: `Glob Primitives` for the pattern types alone, or `Glob Standard Library Integration` (which `@_exported public import`s the target) when you want glob patterns to read as string literals.
 
 Literal content is stored as UTF-8 bytes in `Glob.Segment` and `Glob.Atom`, so platform match implementations compare against filesystem entries without an intermediate `String` allocation.
 
