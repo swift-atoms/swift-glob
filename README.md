@@ -1,4 +1,4 @@
-# swift-glob-primitives
+# swift-glob
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
@@ -11,7 +11,7 @@ Glob pattern types for matching paths against POSIX wildcards, recursive `**` se
 A pattern is parsed once into path-split segments and then inspected. `Glob.isPattern` answers the cheap question — does this string contain glob metacharacters at all — before you commit to a parse:
 
 ```swift
-import Glob_Primitives
+import Glob
 
 // Cheap pre-check: does this string contain glob metacharacters?
 Glob.isPattern("src/**/*.swift")   // true
@@ -36,7 +36,7 @@ lowercase.matches("M")   // false
 The standard-library integration product adds an `ExpressibleByStringLiteral` conformance, so a pattern known at the call site reads as a plain literal and is parsed eagerly when the literal is loaded:
 
 ```swift
-import Glob_Primitives_Standard_Library_Integration
+import Glob_Standard_Library_Integration
 
 let recursive: Glob.Pattern = "src/**/*.swift"   // parsed at the literal site
 ```
@@ -49,7 +49,7 @@ The grammar is `*` (any run of characters within a segment), `**` (zero or more 
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-primitives/swift-glob-primitives.git", branch: "main")
+    .package(url: "https://github.com/swift-atoms/swift-glob.git", branch: "main")
 ]
 ```
 
@@ -57,7 +57,7 @@ dependencies: [
 .target(
     name: "YourTarget",
     dependencies: [
-        .product(name: "Glob Primitives", package: "swift-glob-primitives"),
+        .product(name: "Glob", package: "swift-glob"),
     ]
 )
 ```
@@ -72,10 +72,10 @@ Two library products. Foundation-free.
 
 | Product | Import | Purpose |
 |---------|--------|---------|
-| `Glob Primitives` | `Glob_Primitives` | The `Glob` namespace and its vocabulary: `Glob.Pattern` and its byte-stream `Glob.Pattern.Parser`, the `Glob.Segment` / `Glob.Atom` / `Glob.Scalar.Class` building blocks, `Glob.Options`, and the typed `Glob.Error` family. |
-| `Glob Primitives Standard Library Integration` | `Glob_Primitives_Standard_Library_Integration` | Re-exports the core target and adds the `ExpressibleByStringLiteral` conformance on `Glob.Pattern`. |
+| `Glob Primitives` | `Glob` | The `Glob` namespace and its vocabulary: `Glob.Pattern` and its byte-stream `Glob.Pattern.Parser`, the `Glob.Segment` / `Glob.Atom` / `Glob.Scalar.Class` building blocks, `Glob.Options`, and the typed `Glob.Error` family. |
+| `Glob Standard Library Integration` | `Glob_Standard_Library_Integration` | Re-exports the target and adds the `ExpressibleByStringLiteral` conformance on `Glob.Pattern`. |
 
-Import the narrowest product you need: `Glob Primitives` for the pattern types alone, or `Glob Primitives Standard Library Integration` (which `@_exported public import`s the core target) when you want glob patterns to read as string literals.
+Import the narrowest product you need: `Glob Primitives` for the pattern types alone, or `Glob Standard Library Integration` (which `@_exported public import`s the target) when you want glob patterns to read as string literals.
 
 Literal content is stored as UTF-8 bytes in `Glob.Segment` and `Glob.Atom`, so platform match implementations compare against filesystem entries without an intermediate `String` allocation.
 
