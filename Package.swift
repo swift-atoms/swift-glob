@@ -20,28 +20,67 @@ let package = Package(
             name: "Glob Standard Library Integration",
             targets: ["Glob Standard Library Integration"]
         ),
-        .library(
-            name: "Glob Apple Foundation Integration",
-            targets: ["Glob Apple Foundation Integration"]
+    ],
+    dependencies: [
+        .package(
+            url: "https://github.com/swift-molecules/swift-array.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-ownership-shared.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-buffer-linear.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-ascii.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-byte.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-byte-parser.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-parser.git",
+            branch: "main"
         ),
     ],
-    dependencies: [],
     targets: [
         .target(
             name: "Glob",
-            dependencies: []
+            dependencies: [
+                .product(name: "Array", package: "swift-array"),
+                .product(
+                    name: "Ownership Shared Primitive",
+                    package: "swift-ownership-shared"
+                ),
+                .product(
+                    name: "Buffer Linear Primitive",
+                    package: "swift-buffer-linear"
+                ),
+                .product(
+                    name: "Buffer Linear",
+                    package: "swift-buffer-linear"
+                ),
+                .product(name: "ASCII", package: "swift-ascii"),
+                .product(
+                    name: "Byte Standard Library Integration",
+                    package: "swift-byte"
+                ),
+                .product(name: "Byte Parser", package: "swift-byte-parser"),
+                .product(name: "Parser", package: "swift-parser"),
+            ]
         ),
         .target(
             name: "Glob Standard Library Integration",
             dependencies: [
                 "Glob"
-            ]
-        ),
-        .target(
-            name: "Glob Apple Foundation Integration",
-            dependencies: [
-                "Glob",
-                "Glob Standard Library Integration",
             ]
         ),
         .testTarget(
