@@ -12,10 +12,10 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(
-            name: "Glob",
-            targets: ["Glob"]
-        ),
+        .library(name: "Glob", targets: ["Glob"]),
+        .library(name: "Glob Standard Library Integration", targets: ["Glob Standard Library Integration"]),
+        .library(name: "Glob Foundation Library Integration", targets: ["Glob Foundation Library Integration"]),
+        .library(name: "Glob Test Support", targets: ["Glob Test Support"]),
     ],
     dependencies: [
         .package(
@@ -28,20 +28,47 @@ let package = Package(
             name: "Glob",
             dependencies: [
                 .product(name: "ASCII", package: "swift-ascii"),
-            ]
+            ],
+            path: "Sources/Glob"
+        ),
+        .target(
+            name: "Glob Standard Library Integration",
+            dependencies: [
+                .target(name: "Glob"),
+            ],
+            path: "Sources/Glob Standard Library Integration"
+        ),
+        .target(
+            name: "Glob Foundation Library Integration",
+            dependencies: [
+                .target(name: "Glob"),
+                .target(name: "Glob Standard Library Integration"),
+            ],
+            path: "Sources/Glob Foundation Library Integration"
+        ),
+        .target(
+            name: "Glob Test Support",
+            dependencies: [
+                .target(name: "Glob"),
+            ],
+            path: "Tests/Support"
         ),
         .testTarget(
             name: "Glob Tests",
             dependencies: [
-                .target(name: "Glob")
-            ]
+                .target(name: "Glob"),
+                .target(name: "Glob Test Support"),
+                .target(name: "Glob Standard Library Integration"),
+                .target(name: "Glob Foundation Library Integration"),
+            ],
+            path: "Tests/Glob Tests"
         ),
     ],
     swiftLanguageModes: [.v6]
 )
 
-for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
-    let ecosystem: [SwiftSetting] = [
+for target in package.targets {
+    target.swiftSettings = [
         .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
@@ -50,8 +77,4 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
         .enableExperimentalFeature("Lifetimes"),
         .enableUpcomingFeature("InferIsolatedConformances"),
     ]
-
-    let package: [SwiftSetting] = []
-
-    target.swiftSettings = (target.swiftSettings ?? []) + ecosystem + package
 }
