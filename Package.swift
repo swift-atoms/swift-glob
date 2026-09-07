@@ -13,8 +13,8 @@ let package = Package(
     ],
     products: [
         .library(name: "Glob", targets: ["Glob"]),
-        .library(name: "Glob Standard Library Integration", targets: ["Glob Standard Library Integration"]),
-        .library(name: "Glob Foundation Library Integration", targets: ["Glob Foundation Library Integration"]),
+
+        .library(name: "Glob Foundation Integration", targets: ["Glob Foundation Integration"]),
         .library(name: "Glob Test Support", targets: ["Glob Test Support"]),
     ],
     dependencies: [
@@ -31,20 +31,13 @@ let package = Package(
             ],
             path: "Sources/Glob"
         ),
+        
         .target(
-            name: "Glob Standard Library Integration",
+            name: "Glob Foundation Integration",
             dependencies: [
                 .target(name: "Glob"),
             ],
-            path: "Sources/Glob Standard Library Integration"
-        ),
-        .target(
-            name: "Glob Foundation Library Integration",
-            dependencies: [
-                .target(name: "Glob"),
-                .target(name: "Glob Standard Library Integration"),
-            ],
-            path: "Sources/Glob Foundation Library Integration"
+            path: "Sources/Glob Foundation Integration"
         ),
         .target(
             name: "Glob Test Support",
@@ -58,8 +51,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Glob"),
                 .target(name: "Glob Test Support"),
-                .target(name: "Glob Standard Library Integration"),
-                .target(name: "Glob Foundation Library Integration"),
+                .target(name: "Glob Foundation Integration"),
             ],
             path: "Tests/Glob Tests"
         ),
