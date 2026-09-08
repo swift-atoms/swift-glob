@@ -11,12 +11,11 @@ extension Glob {
         @inlinable
         public init(
             raw: Swift.String,
-            segments: [Segment],
-            isRecursive: Swift.Bool
+            segments: [Segment]
         ) {
             self.raw = raw
             self.segments = segments
-            self.isRecursive = isRecursive
+            self.isRecursive = segments.contains(.doubleStar)
         }
     }
 }
