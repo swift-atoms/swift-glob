@@ -3,13 +3,13 @@ import Testing
 @testable import Glob
 
 extension Glob.Pattern {
-    @Suite struct Tests {
-        @Suite struct Unit {}
-        @Suite struct Integration {}
+    @Suite struct `Glob patterns retain their text and distinguish literal from pattern syntax` {
+        @Suite struct `Glob literals retain their text representation` {}
+        @Suite struct `Glob patterns detect metacharacters and preserve equality and hashing` {}
     }
 }
 
-extension Glob.Pattern.Tests.Unit {
+extension Glob.Pattern.`Glob patterns retain their text and distinguish literal from pattern syntax`.`Glob literals retain their text representation` {
     @Test
     func `literal pattern retains its representation`() {
         let pattern = Glob.Pattern(
@@ -23,7 +23,7 @@ extension Glob.Pattern.Tests.Unit {
     }
 }
 
-extension Glob.Pattern.Tests.Integration {
+extension Glob.Pattern.`Glob patterns retain their text and distinguish literal from pattern syntax`.`Glob patterns detect metacharacters and preserve equality and hashing` {
     @Test
     func `Glob.isPattern detects metacharacters`() {
         #expect(Glob.isPattern("*.txt") == true)
