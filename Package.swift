@@ -36,11 +36,11 @@ let package = Package(
             name: "Glob",
             dependencies: [
                 .product(name: "ASCII", package: "swift-ascii"),
-                .product(name: "Byte", package: "swift-byte", condition: .when(traits: ["Parser"])),
-                .product(name: "Checkpoint", package: "swift-checkpoint", condition: .when(traits: ["Parser"])),
-                .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Parser"])),
-                .product(name: "Iterator", package: "swift-iterator", condition: .when(traits: ["Parser"])),
-                .product(name: "Parser", package: "swift-parser", condition: .when(traits: ["Parser"])),
+                .product(name: "Byte", package: "swift-byte"),
+                .product(name: "Checkpoint", package: "swift-checkpoint"),
+                .product(name: "Cursor", package: "swift-cursor"),
+                .product(name: "Iterator", package: "swift-iterator"),
+                .product(name: "Parser", package: "swift-parser"),
     ],
             path: "Sources/Glob"
         ),
@@ -68,7 +68,7 @@ let package = Package(
             ],
             path: "Tests/Glob Tests"
         ),
-        .testTarget(name: "Absorbed swift-glob-parser Glob Parser Tests", dependencies: [.product(name: "Byte", package: "swift-byte", condition: .when(traits: ["Parser"])), .product(name: "Cursor", package: "swift-cursor", condition: .when(traits: ["Parser"])), .target(name: "Glob"), .product(name: "Parser", package: "swift-parser", condition: .when(traits: ["Parser"]))], path: "Tests/Absorbed/swift-glob-parser/Glob Parser Tests"),
+        .testTarget(name: "Absorbed swift-glob-parser Glob Parser Tests", dependencies: [.product(name: "Byte", package: "swift-byte"), .product(name: "Cursor", package: "swift-cursor"), .target(name: "Glob"), .product(name: "Parser", package: "swift-parser")], path: "Tests/Absorbed/swift-glob-parser/Glob Parser Tests"),
     ],
     swiftLanguageModes: [.v6]
 )
