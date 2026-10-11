@@ -2,7 +2,7 @@ extension Glob {
 
     public struct Pattern: Sendable, Hashable {
 
-        public let raw: Swift.String
+        public let raw: Swift::String
 
         public let segments: [Segment]
 
@@ -10,7 +10,7 @@ extension Glob {
 
         @inlinable
         public init(
-            raw: Swift.String,
+            raw: Swift::String,
             segments: [Segment]
         ) {
             self.raw = raw

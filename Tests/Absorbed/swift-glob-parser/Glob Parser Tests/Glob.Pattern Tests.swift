@@ -60,7 +60,7 @@ extension Glob.Pattern.`Parsing glob patterns preserves their compiled represent
 
 extension Glob.Pattern.`Parsing glob patterns preserves their compiled representation`.`Parser entry points preserve input and value semantics` {
     @Test
-    func `Successful parsing consumes the supplied byte slice`() throws(any Swift.Error) {
+    func `Successful parsing consumes the supplied byte slice`() throws(any Swift::Error) {
         let bytes = [Byte](utf8: "xxSources/**/*.swift")
         var input = bytes[2...]
 

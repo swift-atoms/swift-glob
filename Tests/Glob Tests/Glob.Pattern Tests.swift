@@ -14,7 +14,7 @@ extension Glob.Pattern.`Glob patterns retain their text and distinguish literal 
     func `A literal pattern retains its supplied representation`() {
         let pattern = Glob.Pattern(
             raw: "file.txt",
-            segments: [.literal(Swift.Array("file.txt".utf8))]
+            segments: [.literal(Swift::Array("file.txt".utf8))]
         )
         #expect(pattern.raw == "file.txt")
         #expect(pattern.segments.count == 1)

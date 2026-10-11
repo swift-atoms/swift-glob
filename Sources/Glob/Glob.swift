@@ -5,7 +5,7 @@ public enum Glob {}
 extension Glob {
 
     @inlinable
-    public static func isPattern(_ string: Swift.String) -> Bool {
+    public static func isPattern(_ string: Swift::String) -> Bool {
         for byte in string.utf8 {
             switch byte {
             case ASCII.Character.Graphic.asterisk,

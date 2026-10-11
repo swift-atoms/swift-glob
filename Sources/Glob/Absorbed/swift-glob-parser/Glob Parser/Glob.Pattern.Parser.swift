@@ -8,8 +8,8 @@ public import Parser
 
 extension Glob.Pattern {
 
-    public struct Parser<Base: Cursor.`Protocol`>: Swift.Sendable
-    where Base: Swift.Sendable, Base.Element == Byte, Base.Failure == Never {
+    public struct Parser<Base: Cursor.`Protocol`>: Swift::Sendable
+    where Base: Swift::Sendable, Base.Element == Byte, Base.Failure == Never {
 
         @inlinable
         public init() {}
@@ -27,7 +27,7 @@ extension Glob.Pattern.Parser: Parser::Parsing {
 
     public func parse(_ input: inout Base) throws(Glob.Error) -> Glob.Pattern {
         let mark = input.checkpoint
-        var bytes: [Swift.UInt8] = []
+        var bytes: [Swift::UInt8] = []
         while let byte = input.next() {
             bytes.append(byte.bitPattern)
         }
@@ -40,8 +40,8 @@ extension Glob.Pattern.Parser: Parser::Parsing {
     }
 
     @usableFromInline
-    static func compile(_ bytes: [Swift.UInt8]) throws(Glob.Error) -> Glob.Pattern {
-        let patternString = Swift.String(decoding: bytes, as: Swift.UTF8.self)
+    static func compile(_ bytes: [Swift::UInt8]) throws(Glob.Error) -> Glob.Pattern {
+        let patternString = Swift::String(decoding: bytes, as: Swift::UTF8.self)
         let parts = patternString.split(separator: "/", omittingEmptySubsequences: false)
         var compiledSegments: [Glob.Segment] = []
 
@@ -52,10 +52,10 @@ extension Glob.Pattern.Parser: Parser::Parsing {
                 continue
             }
 
-            let partString = Swift.String(part)
+            let partString = Swift::String(part)
 
             if !Glob.isPattern(partString) {
-                compiledSegments.append(.literal(Swift.Array(part.utf8)))
+                compiledSegments.append(.literal(Swift::Array(part.utf8)))
                 continue
             }
 
@@ -72,11 +72,11 @@ extension Glob.Pattern.Parser: Parser::Parsing {
 
     @usableFromInline
     static func parseAtoms(
-        _ segment: Swift.String,
-        segmentIndex: Swift.Int
+        _ segment: Swift::String,
+        segmentIndex: Swift::Int
     ) throws(Glob.Error) -> [Glob.Atom] {
         var atoms: [Glob.Atom] = []
-        var literal: [Swift.UInt8] = []
+        var literal: [Swift::UInt8] = []
         var iterator = segment.unicodeScalars.makeIterator()
         var position = 0
 
@@ -130,35 +130,35 @@ extension Glob.Pattern.Parser: Parser::Parsing {
     }
 
     @usableFromInline
-    static func appendUTF8(_ scalar: Unicode.Scalar, to bytes: inout [Swift.UInt8]) {
+    static func appendUTF8(_ scalar: Unicode.Scalar, to bytes: inout [Swift::UInt8]) {
         let v = scalar.value
         if v < 0x80 {
-            bytes.append(Swift.UInt8(truncatingIfNeeded: v))
+            bytes.append(Swift::UInt8(truncatingIfNeeded: v))
         } else if v < 0x800 {
-            bytes.append(Swift.UInt8(0xC0 | (v >> 6)))
-            bytes.append(Swift.UInt8(0x80 | (v & 0x3F)))
+            bytes.append(Swift::UInt8(0xC0 | (v >> 6)))
+            bytes.append(Swift::UInt8(0x80 | (v & 0x3F)))
         } else if v < 0x1_0000 {
-            bytes.append(Swift.UInt8(0xE0 | (v >> 12)))
-            bytes.append(Swift.UInt8(0x80 | ((v >> 6) & 0x3F)))
-            bytes.append(Swift.UInt8(0x80 | (v & 0x3F)))
+            bytes.append(Swift::UInt8(0xE0 | (v >> 12)))
+            bytes.append(Swift::UInt8(0x80 | ((v >> 6) & 0x3F)))
+            bytes.append(Swift::UInt8(0x80 | (v & 0x3F)))
         } else {
-            bytes.append(Swift.UInt8(0xF0 | (v >> 18)))
-            bytes.append(Swift.UInt8(0x80 | ((v >> 12) & 0x3F)))
-            bytes.append(Swift.UInt8(0x80 | ((v >> 6) & 0x3F)))
-            bytes.append(Swift.UInt8(0x80 | (v & 0x3F)))
+            bytes.append(Swift::UInt8(0xF0 | (v >> 18)))
+            bytes.append(Swift::UInt8(0x80 | ((v >> 12) & 0x3F)))
+            bytes.append(Swift::UInt8(0x80 | ((v >> 6) & 0x3F)))
+            bytes.append(Swift::UInt8(0x80 | (v & 0x3F)))
         }
     }
 
     @usableFromInline
     static func parseScalarClass(
-        _ iterator: inout Swift.String.UnicodeScalarView.Iterator,
-        pattern: Swift.String,
-        startPosition: Swift.Int
+        _ iterator: inout Swift::String.UnicodeScalarView.Iterator,
+        pattern: Swift::String,
+        startPosition: Swift::Int
     ) throws(Glob.Error) -> Glob.Scalar.Class {
         var position = startPosition
         var negated = false
-        var scalars: Swift.Set<Swift.UInt32> = []
-        var ranges: [Swift.ClosedRange<Swift.UInt32>] = []
+        var scalars: Swift::Set<Swift::UInt32> = []
+        var ranges: [Swift::ClosedRange<Swift::UInt32>] = []
         var previousScalar: Unicode.Scalar? = nil
         var expectingRangeEnd = false
         var hasContent = false
