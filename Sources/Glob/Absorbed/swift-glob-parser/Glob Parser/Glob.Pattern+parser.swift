@@ -1,12 +1,11 @@
 #if Parser
-import Byte
-import Cursor
-import Parser
+    import Byte
+    import Cursor
+    import Parser
 
-extension Glob.Pattern {
+    extension Glob.Pattern {
 
-
-    @inlinable
-    public static var parser: Glob.Pattern.Parser<ArraySlice<Byte>> { Glob.Pattern.Parser<ArraySlice<Byte>>() }
-}
+        @inlinable
+        public static var parser: Glob.Pattern.Parser<ArraySlice<Byte>> { Glob.Pattern.Parser<ArraySlice<Byte>>() }
+    }
 #endif

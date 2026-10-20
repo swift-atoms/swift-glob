@@ -1,6 +1,5 @@
-import Testing
-
 import Glob
+import Testing
 
 extension Glob.Pattern {
     @Suite struct `Glob patterns retain their text and distinguish literal from pattern syntax` {

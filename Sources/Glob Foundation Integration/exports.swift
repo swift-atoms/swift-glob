@@ -1,2 +1,2 @@
-@_exported public import Glob
 import Foundation
+@_exported public import Glob

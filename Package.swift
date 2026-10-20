@@ -18,7 +18,7 @@ let package = Package(
         .library(name: "Glob Test Support", targets: ["Glob Test Support"]),
     ],
     traits: [
-        .trait(name: "Parser", description: "Absorbed Parser integration"),
+        .trait(name: "Parser", description: "Absorbed Parser integration")
     ],
     dependencies: [
         .package(
@@ -41,21 +41,21 @@ let package = Package(
                 .product(name: "Cursor", package: "swift-cursor"),
                 .product(name: "Iterator", package: "swift-iterator"),
                 .product(name: "Parser", package: "swift-parser"),
-    ],
+            ],
             path: "Sources/Glob"
         ),
 
         .target(
             name: "Glob Foundation Integration",
             dependencies: [
-                .target(name: "Glob"),
+                .target(name: "Glob")
             ],
             path: "Sources/Glob Foundation Integration"
         ),
         .target(
             name: "Glob Test Support",
             dependencies: [
-                .target(name: "Glob"),
+                .target(name: "Glob")
             ],
             path: "Tests/Support"
         ),
@@ -67,20 +67,25 @@ let package = Package(
             ],
             path: "Tests/Glob Tests"
         ),
-        .testTarget(name: "Absorbed swift-glob-parser Glob Parser Tests", dependencies: [.product(name: "Byte", package: "swift-byte"), .product(name: "Cursor", package: "swift-cursor"), .target(name: "Glob"), .product(name: "Parser", package: "swift-parser")], path: "Tests/Absorbed/swift-glob-parser/Glob Parser Tests"),
+        .testTarget(
+            name: "Absorbed swift-glob-parser Glob Parser Tests",
+            dependencies: [.product(name: "Byte", package: "swift-byte"), .product(name: "Cursor", package: "swift-cursor"), .target(name: "Glob"), .product(name: "Parser", package: "swift-parser")],
+            path: "Tests/Absorbed/swift-glob-parser/Glob Parser Tests"
+        ),
     ],
     swiftLanguageModes: [.v6]
 )
 
 for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
-    target.swiftSettings = (target.swiftSettings ?? []) + [
-        .strictMemorySafety(),
-        .enableUpcomingFeature("ExistentialAny"),
-        .enableUpcomingFeature("InternalImportsByDefault"),
-        .enableUpcomingFeature("MemberImportVisibility"),
-        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
-        .enableUpcomingFeature("InferIsolatedConformances"),
-        .enableExperimentalFeature("Lifetimes"),
-        .treatAllWarnings(as: .error),
-    ]
+    target.swiftSettings =
+        (target.swiftSettings ?? []) + [
+            .strictMemorySafety(),
+            .enableUpcomingFeature("ExistentialAny"),
+            .enableUpcomingFeature("InternalImportsByDefault"),
+            .enableUpcomingFeature("MemberImportVisibility"),
+            .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+            .enableUpcomingFeature("InferIsolatedConformances"),
+            .enableExperimentalFeature("Lifetimes"),
+            .treatAllWarnings(as: .error),
+        ]
 }
