@@ -1,14 +1,16 @@
 import Glob
 import Testing
 
-extension Glob.Pattern {
+enum `Glob.Pattern Tests` {}
+
+extension `Glob.Pattern Tests` {
     @Suite struct `Glob patterns retain their text and distinguish literal from pattern syntax` {
         @Suite struct `Glob literals retain their text representation` {}
         @Suite struct `Glob patterns detect metacharacters and preserve equality and hashing` {}
     }
 }
 
-extension Glob.Pattern.`Glob patterns retain their text and distinguish literal from pattern syntax`.`Glob literals retain their text representation` {
+extension `Glob.Pattern Tests`.`Glob patterns retain their text and distinguish literal from pattern syntax`.`Glob literals retain their text representation` {
     @Test
     func `A literal pattern retains its supplied representation`() {
         let pattern = Glob.Pattern(
@@ -21,7 +23,7 @@ extension Glob.Pattern.`Glob patterns retain their text and distinguish literal 
     }
 }
 
-extension Glob.Pattern.`Glob patterns retain their text and distinguish literal from pattern syntax`.`Glob patterns detect metacharacters and preserve equality and hashing` {
+extension `Glob.Pattern Tests`.`Glob patterns retain their text and distinguish literal from pattern syntax`.`Glob patterns detect metacharacters and preserve equality and hashing` {
     @Test
     func `Glob detects metacharacters in a pattern string`() {
         #expect(Glob.isPattern("*.txt") == true)
