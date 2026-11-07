@@ -8,10 +8,15 @@
 
     extension Glob.Pattern {
         @Suite struct `Parsing glob patterns preserves their compiled representation` {
-            @Suite struct `Ordinary glob syntax produces compiled segments` {}
-            @Suite struct `Empty and malformed syntax produces the declared result` {}
-            @Suite struct `Parser entry points preserve input and value semantics` {}
         }
+    }
+
+    extension Glob.Pattern.`Parsing glob patterns preserves their compiled representation` {
+        @Suite struct `Ordinary glob syntax produces compiled segments` {}
+
+        @Suite struct `Empty and malformed syntax produces the declared result` {}
+
+        @Suite struct `Parser entry points preserve input and value semantics` {}
     }
 
     extension Glob.Pattern.`Parsing glob patterns preserves their compiled representation`.`Ordinary glob syntax produces compiled segments` {
