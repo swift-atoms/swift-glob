@@ -160,10 +160,6 @@
             var previousScalar: Unicode.Scalar? = nil
             var expectingRangeEnd = false
 
-            // POSIX (XCU 2.13.1, XBD 9.3.5): a `]` that comes first in the class,
-            // after an optional `!` or `^`, is a member and does not close it.
-            // A class therefore always holds at least one member, so `[]` and
-            // `[!]` on their own are unterminated.
             guard var first = iterator.next() else {
                 throw .invalidPattern(
                     pattern: pattern,
