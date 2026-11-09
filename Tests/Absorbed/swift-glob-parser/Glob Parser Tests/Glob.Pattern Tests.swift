@@ -161,4 +161,59 @@
             #expect(input.isEmpty)
         }
     }
+
+    extension Glob.Pattern.`Parsing glob patterns preserves their compiled representation`.`Ordinary glob syntax produces compiled segments` {
+        @Test
+        func `Bracket classes compile to their POSIX members, ranges and negation`() throws {
+            let cases: [(source: String, scalarClass: Glob.Scalar.Class)] = [
+                ("[!a]", .init(negated: true, ranges: [], scalars: [0x61])),
+                ("[^a]", .init(negated: true, ranges: [], scalars: [0x61])),
+                ("[a-c]", .init(negated: false, ranges: [0x61...0x63], scalars: [])),
+                ("[a-]", .init(negated: false, ranges: [], scalars: [0x61, 0x2D])),
+                ("[-a]", .init(negated: false, ranges: [], scalars: [0x2D, 0x61])),
+                ("[]a]", .init(negated: false, ranges: [], scalars: [0x5D, 0x61])),
+                ("[!]a]", .init(negated: true, ranges: [], scalars: [0x5D, 0x61])),
+                ("[]]", .init(negated: false, ranges: [], scalars: [0x5D])),
+                ("[!]]", .init(negated: true, ranges: [], scalars: [0x5D])),
+                ("[]-a]", .init(negated: false, ranges: [0x5D...0x61], scalars: [])),
+            ]
+            for (source, scalarClass) in cases {
+                let pattern = try Glob.Pattern.parse(source)
+                #expect(pattern.segments == [.pattern([.scalar(scalarClass)])], "\(source)")
+            }
+        }
+
+        @Test
+        func `A negated class matches every scalar outside its members`() throws {
+            let pattern = try Glob.Pattern.parse("[!]a]")
+            guard case .pattern(let atoms) = pattern.segments.first, case .scalar(let scalarClass) = atoms.first else {
+                Issue.record("expected one scalar class")
+                return
+            }
+            #expect(!scalarClass.matches("]"))
+            #expect(!scalarClass.matches("a"))
+            #expect(scalarClass.matches("b"))
+        }
+    }
+
+    extension Glob.Pattern.`Parsing glob patterns preserves their compiled representation`.`Empty and malformed syntax produces the declared result` {
+        @Test
+        func `Malformed syntax reports its reason and position within the segment`() {
+            let cases: [(source: String, error: Glob.Error)] = [
+                ("[abc", .invalidPattern(pattern: "[abc", position: 4, reason: .unterminatedClass)),
+                ("[", .invalidPattern(pattern: "[", position: 1, reason: .unterminatedClass)),
+                ("[]", .invalidPattern(pattern: "[]", position: 2, reason: .unterminatedClass)),
+                ("[!]", .invalidPattern(pattern: "[!]", position: 3, reason: .unterminatedClass)),
+                ("[!", .invalidPattern(pattern: "[!", position: 2, reason: .unterminatedClass)),
+                ("[b-a]", .invalidPattern(pattern: "[b-a]", position: 4, reason: .invalidRange)),
+                (#"ab\"#, .invalidPattern(pattern: #"ab\"#, position: 3, reason: .unexpectedEnd)),
+                ("dir/x[b-a]", .invalidPattern(pattern: "x[b-a]", position: 5, reason: .invalidRange)),
+            ]
+            for (source, error) in cases {
+                #expect(throws: error, "\(source)") {
+                    _ = try Glob.Pattern.parse(source)
+                }
+            }
+        }
+    }
 #endif

@@ -4,8 +4,6 @@ extension Glob.Error {
 
         case unterminatedClass
 
-        case emptyClass
-
         case invalidRange
 
         case unexpectedEnd

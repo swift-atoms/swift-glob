@@ -159,9 +159,12 @@
             var ranges: [Swift::ClosedRange<Swift::UInt32>] = []
             var previousScalar: Unicode.Scalar? = nil
             var expectingRangeEnd = false
-            var hasContent = false
 
-            guard let first = iterator.next() else {
+            // POSIX (XCU 2.13.1, XBD 9.3.5): a `]` that comes first in the class,
+            // after an optional `!` or `^`, is a member and does not close it.
+            // A class therefore always holds at least one member, so `[]` and
+            // `[!]` on their own are unterminated.
+            guard var first = iterator.next() else {
                 throw .invalidPattern(
                     pattern: pattern,
                     position: position,
@@ -171,23 +174,23 @@
             position += 1
             if first == "!" || first == "^" {
                 negated = true
-            } else if first == "]" {
-
-                throw .invalidPattern(
-                    pattern: pattern,
-                    position: position,
-                    reason: .emptyClass
-                )
-            } else {
-                previousScalar = first
-                scalars.insert(first.value)
-                hasContent = true
+                guard let member = iterator.next() else {
+                    throw .invalidPattern(
+                        pattern: pattern,
+                        position: position,
+                        reason: .unterminatedClass
+                    )
+                }
+                position += 1
+                first = member
             }
+            previousScalar = first
+            scalars.insert(first.value)
 
             while let scalar = iterator.next() {
                 position += 1
 
-                if scalar == "]" && (hasContent || negated) {
+                if scalar == "]" {
 
                     if expectingRangeEnd {
 
@@ -218,14 +221,12 @@
                         ranges.append(start.value...scalar.value)
 
                         scalars.remove(start.value)
-                        hasContent = true
                     }
                     expectingRangeEnd = false
                     previousScalar = nil
                 } else {
                     scalars.insert(scalar.value)
                     previousScalar = scalar
-                    hasContent = true
                 }
             }
 
